@@ -4,6 +4,7 @@
     <title>Burger Town</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="menu.js"></script>
     <script src="js/js_script.js"></script>
     <script src="https://vuejs.org/js/vue.js"></script>
     <script src="js/vue_script.js"></script>
@@ -22,7 +23,7 @@
 <h3>Select a burger</h3>
 <p>This is where you execute burger selection</p>
 
-    <table>
+    <table id = burgerGrid>
         <thead>
         <tr>
             <td>The Basic Burger</td>
@@ -31,6 +32,7 @@
         </tr>
         </thead>
         <tbody>
+        <tr>
         <td><img src="http://www.buenavistabocas.com/wp-content/uploads/2011/03/Basic-Burger-panama-restaurants-300x227.jpg" title="Basic" height="200"></td>
         <td><img src="https://howtofeedaloon.com/wp-content/uploads/2016/06/veggie-burger-gawker-2.jpg" title="Veggie" height="200"></td>
         <td><img src="https://media-cdn.tripadvisor.com/media/photo-s/0b/86/ac/0f/crafty-burger.jpg" title="Cheesy" height="200"></td>
@@ -51,13 +53,7 @@
             </ul></td>
         </tr>
         </tbody>
-        <tfoot>
-        <tr>
-            <td>SEK 70</td>
-            <td>SEK 70</td>
-            <td>SEK 100</td>
-        </tr>
-        </tfoot>
+
     </table>
 
 
