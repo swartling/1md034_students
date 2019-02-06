@@ -6,13 +6,13 @@ function MenuItem(name, kcal, gluten, lactose, img){
     this.img = img;
     this.allergies = function(){
         if(this.gluten && this.lactose){
-            return "contains Gluten, Lactose"
+            return "Contains Gluten, Lactose"
         }
         else if (this.gluten){
-            return "contains Gluten"
+            return "Contains Gluten"
         }
         else if (this.lactose){
-            return "contains Lactose"
+            return "Contains Lactose"
         }
     }
     this.info = function() {

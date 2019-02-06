@@ -3,22 +3,22 @@ var food = [
         name: "The Basic Burger",
         kcal: 700,
         gluten: true,
-        lactose: false,
+        lactose: true,
         img: "http://www.buenavistabocas.com/wp-content/uploads/2011/03/Basic-Burger-panama-restaurants-300x227.jpg"
     },
     {
         name: "The Veggie Burger",
         kcal: 600,
-        gluten: false,
+        gluten: true,
         lactose: false,
         img: "https://howtofeedaloon.com/wp-content/uploads/2016/06/veggie-burger-gawker-2.jpg"
     },
     {
         name: "The Cheesy Burger",
         kcal: 1000,
-        gluten: false,
-        lactose: false,
-        img: "https://howtofeedaloon.com/wp-content/uploads/2016/06/veggie-burger-gawker-2.jpg"
+        gluten: true,
+        lactose: true,
+        img: "https://media-cdn.tripadvisor.com/media/photo-s/0b/86/ac/0f/crafty-burger.jpg"
     },
     {
         name: "Bajsmackan",
@@ -30,7 +30,7 @@ var food = [
     {
         name: "The Brioche Burger",
         kcal: 300,
-        gluten: false,
+        gluten: true,
         lactose: false,
         img: "https://s.hdnux.com/photos/34/42/22/7480507/3/920x920.jpg"
     },
@@ -38,7 +38,7 @@ var food = [
         name: "The Turkey Burger",
         kcal: 500,
         gluten: false,
-        lactose: false,
+        lactose: true,
         img: "https://foremangrillrecipes.com/wp-content/uploads/2013/05/turkey-burger-foreman-grill.jpg"
     }
 ]
