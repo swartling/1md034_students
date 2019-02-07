@@ -5,7 +5,6 @@ function MenuItem(name, kcal, gluten, lactose, img){
     this.lactose = lactose;
     this.img = img;
     this.allergies = function(){
-        console.log(this.name + " gluten & lactose " + (this.gluten && this.lactose));
         if (this.gluten && this.lactose){
             return "Contains Gluten & Lactose"
         }
@@ -16,7 +15,7 @@ function MenuItem(name, kcal, gluten, lactose, img){
             return "Contains Gluten"
         }
         else {
-            return ""
+            return "Allergen free"
         }
     }
     this.info = function() {
@@ -50,7 +49,6 @@ function createBurgers() {
 
 function updateBurger() {
     let el = document.getElementById("grid");
-    console.log(el);
     while (el.firstChild) {
         el.removeChild(el.firstChild);
     }
@@ -73,9 +71,79 @@ function updateBurger() {
         allergy.innerText = burger.allergies();
         box.appendChild(allergy);
 
+        let checkBox = document.createElement("input");
+        checkBox.setAttribute("type", "checkbox");
+        box.appendChild(checkBox);
+
         el.appendChild(box);
     }
 }
+
+function order(){
+    let name = document.getElementById("name");
+    let email = document.getElementById("email");
+    let street = document.getElementById("street");
+    let house = document.getElementById("house");
+    let payment = document.getElementById("payment");
+
+    let gender;
+    let r1 = document.getElementById("r1");
+    let r2 = document.getElementById("r2");
+    let r3 = document.getElementById("r3");
+
+    if(r1.checked){
+    gender = r1;
+    }
+    else if(r2.checked){
+        gender = r2;
+    }
+    else {
+        gender = r3;
+    }
+
+    /*
+    let checkedBurgers = [];
+    for(let child of document.getElementById("grid").children){
+        if(child.lastChild.checked){
+            let burgerChecked = {
+                name: child.title;
+                value: "Ordered";
+            }
+            checkedBurgers.push(burgerChecked);
+        }
+    }
+    */
+
+    let infoArray = [name, email, street, house, payment, gender];
+    let section = document.getElementById("info");
+
+    while (section.firstChild) {
+        section.removeChild(section.firstChild);
+    }
+
+    for(let thing of infoArray){
+        let div = document.createElement("div");
+        div.innerText = thing.name +": " + thing.value;
+        section.appendChild(div);
+    }
+
+    for(let child of document.getElementById("grid").children){
+        console.log("in for");
+        if(child.lastChild.checked){
+            console.log(child.firstChild.innerText + "is checked");
+            let div = document.createElement("div");
+            div.innerText = (child.firstChild.innerText + " ordered")
+            section.appendChild(div);
+        }
+
+    }
+
+}
+
+
+let orderButton = document.getElementById("order");
+orderButton.addEventListener("click", order);
+
 
 let menuArray = createBurgers();
 updateBurger();
