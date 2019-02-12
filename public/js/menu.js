@@ -1,17 +1,17 @@
 var food = [
     {
-        name: "The Basic Burger",
-        kcal: 700,
-        gluten: true,
-        lactose: true,
-        img: "http://www.buenavistabocas.com/wp-content/uploads/2011/03/Basic-Burger-panama-restaurants-300x227.jpg"
-    },
-    {
         name: "The Veggie Burger",
         kcal: 600,
         gluten: true,
         lactose: false,
         img: "https://howtofeedaloon.com/wp-content/uploads/2016/06/veggie-burger-gawker-2.jpg"
+    },
+    {
+        name: "The Basic Burger",
+        kcal: 700,
+        gluten: true,
+        lactose: true,
+        img: "http://www.buenavistabocas.com/wp-content/uploads/2011/03/Basic-Burger-panama-restaurants-300x227.jpg"
     },
     {
         name: "The Cheesy Burger",

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Burger Town</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/menu.js" defer></script>
+    <script src="js/js_script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
+    <!--<script src="js/vue_script.js" defer></script>-->
+
+
+</head>
+<body>
+<main>
+    <section id="top">
+        <img src="https://burgerblog2017.files.wordpress.com/2017/01/burger-header.jpg" id="background" title="background">
+        <h1 id="top_title">Welcome to Burger Town</h1>
+    </section>
+
+    <section id="burger_select">
+
+        <h3>Select a burger</h3>
+        <p>This is where you execute burger selection</p>
+
+        <div id = "grid" class="wrapper">
+            <div class="box a">
+                <img src="http://www.buenavistabocas.com/wp-content/uploads/2011/03/Basic-Burger-panama-restaurants-300x227.jpg" title="Basic" height="200" width="200">
+                <h5>The Basic Burger</h5>
+            </div>
+            <div class="box b">
+                <img src="https://howtofeedaloon.com/wp-content/uploads/2016/06/veggie-burger-gawker-2.jpg" title="Veggie" height="200" width="200">
+                <h5>The Veggie Burger</h5>
+            </div>
+            <div class="box c">
+                <img src="https://media-cdn.tripadvisor.com/media/photo-s/0b/86/ac/0f/crafty-burger.jpg" title="Cheesy" height="200" width="200">
+                <h5>The Cheesy Burger</h5>
+            </div>
+            <div class="box d">
+                <img src="https://image.shutterstock.com/z/stock-photo-a-shit-burger-fast-food-is-a-garbage-concept-unpleasant-food-212949169.jpg" title="bajs" height ="200" width="200">
+                <h5>Bajsmackan</h5>
+            </div>
+            <div class="box e">
+                <img src="https://s.hdnux.com/photos/34/42/22/7480507/3/920x920.jpg" title="brioche" height="200" width="200">
+                <h5>The Brioche Burger</h5>
+            </div>
+            <div class="box f">
+                <img src="https://foremangrillrecipes.com/wp-content/uploads/2013/05/turkey-burger-foreman-grill.jpg" title="turkey" height="200" width="200">
+                <h5>The Turkey Burger</h5>
+            </div>
+        </div>
+
+
+    </section>
+
+    <section id="payment_info">
+        <h3>Customer information</h3>
+        <p>This is where you provide user information</p>
+
+        <h4>Delivery information:</h4>
+        <p>
+            <label for="name">Full name</label><br>
+            <input type="text" id="name" name="Name" required="required" placeholder="First- and last name">
+        </p>
+
+        <p>
+            <label for="email">E-mail</label><br>
+            <input type="text" id="email" name="Email" required="required" placeholder="E-mail address">
+        </p>
+
+        <p><label for="street">Street</label><br>
+            <input type="text" id="street" name="Street" required="required" placeholder="Street name">
+        </p>
+
+        <p><label for="house">House</label><br>
+            <input type="text" id="house" name="House" required="required" placeholder="House number"></p>
+
+
+        <p>
+            <label for="payment">Payment</label><br>
+            <select id="payment" name="Payment">
+                <option selected="selected">Credit card</option>
+                <option>Swish</option>
+                <option>Klarna</option>
+            </select>
+        </p>
+
+        <h5>Gender:</h5>
+        <form id="gender" action="">
+            <input type="radio" id="r1" name="Gender" value="Male"> Male<br>
+            <input type="radio" id="r2" name="Gender" value="Female"> Female<br>
+            <input type="radio" id="r3" name="Gender" value="Other/Prefer not to say" checked="checked"> Other/Prefer not to say<br>
+        </form>
+
+    </section>
+
+    <button type="submit" id="order"><img src="data:image/png;base64,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" width="50"> Submit Order</button>
+
+    <section id="info">
+    </section>
+
+</main>
+<footer>Burger Town Inc</footer>
+</body>
+</html>
