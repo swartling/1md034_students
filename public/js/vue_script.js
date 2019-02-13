@@ -1,27 +1,5 @@
 
 
-function MenuItem(name, kcal, gluten, lactose, img){
-    this.name = name;
-    this.kcal = kcal;
-    this.gluten = gluten;
-    this.lactose = lactose;
-    this.img = img;
-    this.allergies = function(){
-        if(this.gluten && this.lactose){
-            return "Contains Gluten, Lactose"
-        }
-        else if (this.gluten){
-            return "Contains Gluten"
-        }
-        else if (this.lactose){
-            return "Contains Lactose"
-        }
-    }
-    this.info = function() {
-
-        return (name + "\n" + kcal + " kcal");
-    }
-}
 /*
 let basicBurger = new MenuItem("The Basic Burger", 700, true, false);
 let veggieBurger = new MenuItem("The Veggie Burger", 600, false, false);
@@ -30,12 +8,37 @@ let turkeyBurger = new MenuItem("The Turkey Burger", 600, true, false);
 let briocheBurger = new MenuItem("The Brioche Burger", 800, true, false);
 */
 new Vue({
-    el: "#grid",
-    data: {food},
+    el: "#main",
+    data: {
+        food,
+        nameV: "Name: " + document.getElementById("name").value,
+        emailV: "Email: " + document.getElementById("email").value,
+        streetV: "Street: " + document.getElementById("street").value,
+        houseV: "House: " + document.getElementById("house").value,
+        paymentV: "Payment: " + document.getElementById("payment").value,
+        genderV: getGender(),
+        ordersV: getOrders(),
+
+        pressed: false
+    },
+    methods: {
+        updateValues: function() {
+            this.nameV = "Name: " + document.getElementById("name").value;
+            this.emailV = "Email: " + document.getElementById("email").value;
+            this.streetV = "Street: " + document.getElementById("street").value;
+            this.houseV = "House: " + document.getElementById("house").value;
+            this.paymentV = "Payment: " + document.getElementById("payment").value;
+            this.genderV = getGender();
+            this.ordersV = getOrders();
+
+            this.pressed = true;
+        }
+    },
+
     created: function(){
         let menuArray = [];
         for(let burger of food) {
-            let dish = new MenuItem(burger.name, burger.kcal, burger.lactose, burger.img)
+            let dish = new MenuItem(burger.name ,burger.kcal, burger.gluten, burger.lactose, burger.img)
             menuArray.push(dish);
         }
         let el = document.getElementById("grid");
@@ -54,6 +57,7 @@ new Vue({
 
             let img = document.createElement("img");
             img.src = burger.img;
+            console.log(burger);
             img.setAttribute("height", "200");
             img.setAttribute("width", "200");
             box.appendChild(img);
@@ -71,18 +75,6 @@ new Vue({
     }
 })
 
-new Vue({
-    el: "#info",
-    data: {
-        name: "Name: " + document.getElementById("name").value,
-        email: "Email: " + document.getElementById("email").value,
-        street: "Street: " + document.getElementById("street").value,
-        house: "House: " + document.getElementById("house").value,
-        payment: "Payment: " + document.getElementById("payment").value,
-        gender: "Gender: " + getGender(),
-        orders: getOrders()
-    }
-})
 
 function getGender(){
     let gender;
@@ -99,30 +91,45 @@ function getGender(){
     else {
         gender = r3;
     }
-    return gender.value;
+    return "\n Gender: "+gender.value;
 }
 
 function getOrders() {
-    let string = "";
+    let stringList = [];
     for(let child of document.getElementById("grid").children){
         if(child.lastChild.checked){
-            string = string + child.firstChild.innerText + " ordered \n";
+            let string =child.firstChild.innerText + " ordered \n";
+            stringList.push(string);
         }
     }
-return string;
+return stringList;
 }
 
-function pressButton(){
-    pressed = true;
+
+
+
+function MenuItem(name, kcal, gluten, lactose, img){
+    this.name = name;
+    this.kcal = kcal;
+    this.gluten = gluten;
+    this.lactose = lactose;
+    this.img = img;
+    this.allergies = function(){
+        if(this.gluten && this.lactose){
+            return "Contains Gluten, Lactose"
+        }
+        else if (this.gluten){
+            return "Contains Gluten"
+        }
+        else if (this.lactose){
+            return "Contains Lactose"
+        }
+        else {
+            return ""
+        }
+    }
+    this.info = function() {
+
+        return (name + "\n" + kcal + " kcal");
+    }
 }
-/*
-var button = new Vue({
-    el: "#order",
-    data: {pressed: false}
-})
-
-let pressed = false;
-
-let orderButton = document.getElementById("order";
-orderButton.addEventListener("click", pressButton);
-*/
