@@ -18,15 +18,11 @@ new Vue({
         updateValues: function() {
             this.nameV = "Name: " + document.getElementById("name").value;
             this.emailV = "Email: " + document.getElementById("email").value;
-            this.streetV = "Street: " + document.getElementById("street").value;
-            this.houseV = "House: " + document.getElementById("house").value;
             this.paymentV = "Payment: " + document.getElementById("payment").value;
             this.genderV = getGender();
             this.ordersV = getOrders();
 
             this.pressed = true;
-
-
         },
 
         getNext: function () {
@@ -38,11 +34,23 @@ new Vue({
         addOrder: function (event) {
             var offset = {x: event.currentTarget.getBoundingClientRect().left,
                 y: event.currentTarget.getBoundingClientRect().top};
-            socket.emit("addOrder", { orderId: this.getNext(),
+            socket.emit("addOrder", {
+                orderId: this.getNext(),
                 details: { x: event.clientX - 10 - offset.x,
                     y: event.clientY - 10 - offset.y },
-                orderItems: ["Beans", "Curry"]
+                orderItems: getOrders()
             });
+        },
+
+        displayOrder: function (event) {
+            var offset = {x: event.currentTarget.getBoundingClientRect().left,
+                y: event.currentTarget.getBoundingClientRect().top};
+                console.log("displayOrder");
+                this.orders.details = {
+                    x: event.clientX - 10 - offset.x,
+                    y: event.clientY - 10 - offset.y }
+
+                    console.log(this.orders.details)
         }
     },
 
@@ -76,7 +84,6 @@ new Vue({
 
             let img = document.createElement("img");
             img.src = burger.img;
-            console.log(burger);
             img.setAttribute("height", "200");
             img.setAttribute("width", "200");
             box.appendChild(img);
@@ -93,48 +100,6 @@ new Vue({
         }
     }
 });
-
-/*jslint es5:true, indent: 2 */
-/*global Vue, io */
-/* exported vm */
-
-
-/*
-var vm = new Vue({
-    el: '#dots',
-    data: {
-        orders: {},
-    },
-    created: function () {
-        socket.on('initialize', function (data) {
-            this.orders = data.orders;
-        }.bind(this));
-
-        socket.on('currentQueue', function (data) {
-            this.orders = data.orders;
-        }.bind(this));
-    },
-    methods: {
-        getNext: function () {
-            var lastOrder = Object.keys(this.orders).reduce(function (last, next) {
-                return Math.max(last, next);
-            }, 0);
-            return lastOrder + 1;
-        },
-        addOrder: function (event) {
-            var offset = {x: event.currentTarget.getBoundingClientRect().left,
-                y: event.currentTarget.getBoundingClientRect().top};
-            socket.emit("addOrder", { orderId: this.getNext(),
-                details: { x: event.clientX - 10 - offset.x,
-                    y: event.clientY - 10 - offset.y },
-                orderItems: ["Beans", "Curry"]
-            });
-        }
-    }
-});
-
-*/
-
 
 function getGender(){
     let gender;
@@ -158,7 +123,7 @@ function getOrders() {
     let stringList = [];
     for(let child of document.getElementById("grid").children){
         if(child.lastChild.checked){
-            let string =child.firstChild.innerText + " ordered \n";
+            let string =child.firstChild.innerText;
             stringList.push(string);
         }
     }
@@ -193,3 +158,5 @@ function MenuItem(name, kcal, gluten, lactose, img){
         return (name + "\n" + kcal + " kcal");
     }
 }
+
+
