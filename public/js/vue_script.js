@@ -1,25 +1,18 @@
-
-
-/*
-let basicBurger = new MenuItem("The Basic Burger", 700, true, false);
-let veggieBurger = new MenuItem("The Veggie Burger", 600, false, false);
-let cheesyBurger = new MenuItem("The Cheesy Burger", 1000, true, true);
-let turkeyBurger = new MenuItem("The Turkey Burger", 600, true, false);
-let briocheBurger = new MenuItem("The Brioche Burger", 800, true, false);
-*/
+'use strict';
+var socket = io();
 new Vue({
     el: "#main",
     data: {
         food,
         nameV: "Name: " + document.getElementById("name").value,
         emailV: "Email: " + document.getElementById("email").value,
-        streetV: "Street: " + document.getElementById("street").value,
-        houseV: "House: " + document.getElementById("house").value,
         paymentV: "Payment: " + document.getElementById("payment").value,
         genderV: getGender(),
         ordersV: getOrders(),
 
-        pressed: false
+        pressed: false,
+
+        orders: {}
     },
     methods: {
         updateValues: function() {
@@ -32,10 +25,36 @@ new Vue({
             this.ordersV = getOrders();
 
             this.pressed = true;
+
+
+        },
+
+        getNext: function () {
+            var lastOrder = Object.keys(this.orders).reduce(function (last, next) {
+                return Math.max(last, next);
+            }, 0);
+            return lastOrder + 1;
+        },
+        addOrder: function (event) {
+            var offset = {x: event.currentTarget.getBoundingClientRect().left,
+                y: event.currentTarget.getBoundingClientRect().top};
+            socket.emit("addOrder", { orderId: this.getNext(),
+                details: { x: event.clientX - 10 - offset.x,
+                    y: event.clientY - 10 - offset.y },
+                orderItems: ["Beans", "Curry"]
+            });
         }
     },
 
     created: function(){
+        socket.on('initialize', function (data) {
+            this.orders = data.orders;
+        }.bind(this));
+
+        socket.on('currentQueue', function (data) {
+            this.orders = data.orders;
+        }.bind(this));
+
         let menuArray = [];
         for(let burger of food) {
             let dish = new MenuItem(burger.name ,burger.kcal, burger.gluten, burger.lactose, burger.img)
@@ -73,7 +92,48 @@ new Vue({
             el.appendChild(box);
         }
     }
-})
+});
+
+/*jslint es5:true, indent: 2 */
+/*global Vue, io */
+/* exported vm */
+
+
+/*
+var vm = new Vue({
+    el: '#dots',
+    data: {
+        orders: {},
+    },
+    created: function () {
+        socket.on('initialize', function (data) {
+            this.orders = data.orders;
+        }.bind(this));
+
+        socket.on('currentQueue', function (data) {
+            this.orders = data.orders;
+        }.bind(this));
+    },
+    methods: {
+        getNext: function () {
+            var lastOrder = Object.keys(this.orders).reduce(function (last, next) {
+                return Math.max(last, next);
+            }, 0);
+            return lastOrder + 1;
+        },
+        addOrder: function (event) {
+            var offset = {x: event.currentTarget.getBoundingClientRect().left,
+                y: event.currentTarget.getBoundingClientRect().top};
+            socket.emit("addOrder", { orderId: this.getNext(),
+                details: { x: event.clientX - 10 - offset.x,
+                    y: event.clientY - 10 - offset.y },
+                orderItems: ["Beans", "Curry"]
+            });
+        }
+    }
+});
+
+*/
 
 
 function getGender(){
