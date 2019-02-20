@@ -11,10 +11,23 @@ new Vue({
         ordersV: getOrders(),
 
         pressed: false,
+        target: false,
 
-        orders: {}
+        orders: {},
+
+        mapStyleObject: {
+            left: null,
+            top: null
+        },
+
+        lastOrderNo: 0
     },
     methods: {
+        orderButton: function(){
+          this.updateValues();
+          this.addOrder();
+        },
+
         updateValues: function() {
             this.nameV = "Name: " + document.getElementById("name").value;
             this.emailV = "Email: " + document.getElementById("email").value;
@@ -24,22 +37,24 @@ new Vue({
 
             this.pressed = true;
         },
-
+/*
         getNext: function () {
             var lastOrder = Object.keys(this.orders).reduce(function (last, next) {
                 return Math.max(last, next);
             }, 0);
             return lastOrder + 1;
-        },
-        addOrder: function (event) {
-            var offset = {x: event.currentTarget.getBoundingClientRect().left,
-                y: event.currentTarget.getBoundingClientRect().top};
+        },*/
+        addOrder: function () {
+            let infoArray = [this.nameV, this.emailV, this.paymentV, this.genderV];
+
+            this.lastOrderNo += 1;
             socket.emit("addOrder", {
-                orderId: this.getNext(),
-                details: { x: event.clientX - 10 - offset.x,
-                    y: event.clientY - 10 - offset.y },
+                orderId: this.lastOrderNo,
+                details: this.orders.details,
                 orderItems: getOrders()
             });
+
+            socket.emit("addInfo", infoArray);
         },
 
         displayOrder: function (event) {
@@ -48,9 +63,21 @@ new Vue({
                 console.log("displayOrder");
                 this.orders.details = {
                     x: event.clientX - 10 - offset.x,
-                    y: event.clientY - 10 - offset.y }
+                    y: event.clientY - 10 - offset.y };
 
-                    console.log(this.orders.details)
+                    console.log("x: " + this.orders.details.x);
+                    console.log("y: " + this.orders.details.y);
+                    this.mapStyleObject.left = this.orders.details.x + 'px';
+                    this.mapStyleObject.top = this.orders.details.y + 'px';
+                    console.log("left: " + this.mapStyleObject.left);
+                    console.log("top: " + this.mapStyleObject.top);
+                        /*= {
+                        left: this.orders.details.x + 'px',
+                        top: this.orders.details.y + 'px'
+                    };*/
+                    this.target = true;
+
+                    //console.log(this.orders.details)
         }
     },
 
@@ -61,6 +88,10 @@ new Vue({
 
         socket.on('currentQueue', function (data) {
             this.orders = data.orders;
+        }.bind(this));
+
+        socket.on('currentInfo', function(data){
+
         }.bind(this));
 
         let menuArray = [];
