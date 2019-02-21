@@ -34,6 +34,7 @@ app.get('/dispatcher', function (req, res) {
 // prepare for multiple instances of data if necessary
 function Data() {
   this.orders = {};
+  this.infoArray = [];
 }
 
 /*
@@ -48,6 +49,10 @@ Data.prototype.getAllOrders = function () {
   return this.orders;
 };
 
+Data.prototype.addInfo = function (infoArray) {
+  this.infoArray = infoArray;
+};
+
 var data = new Data();
 
 io.on('connection', function (socket) {
@@ -59,6 +64,11 @@ io.on('connection', function (socket) {
     data.addOrder(order);
     // send updated info to all connected clients, note the use of io instead of socket
     io.emit('currentQueue', { orders: data.getAllOrders() });
+  });
+
+  socket.on('addInfo', function(infoArray){
+    data.addInfo(infoArray);
+    io.emit('currentInfo', { infoArray: data.infoArray});
   });
 
 });

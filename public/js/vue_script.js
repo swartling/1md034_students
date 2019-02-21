@@ -90,10 +90,6 @@ new Vue({
             this.orders = data.orders;
         }.bind(this));
 
-        socket.on('currentInfo', function(data){
-
-        }.bind(this));
-
         let menuArray = [];
         for(let burger of food) {
             let dish = new MenuItem(burger.name ,burger.kcal, burger.gluten, burger.lactose, burger.img)
